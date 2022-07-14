@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Asanify</title>
+    <title>Document</title>
     <script
       type="text/javascript"
       src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.3/xlsx.full.min.js"
@@ -42,12 +42,12 @@
               );
               for (let i = 0; i < rowObject.length; i++) {
                 if (rowObject[i].hasOwnProperty("MANAGER EMPLOYEE_ID")) {
-                  console.log("Yes");
+                  // console.log("Yes");
                 } else {
                   rowObject[i]["MANAGER EMPLOYEE_ID"] = 0;
                 }
               }
-              console.log(rowObject);
+              // console.log(rowObject);
               let jsonObject = JSON.stringify(rowObject);
               document.getElementById("jsonData").innerHTML = jsonObject;
               console.log("STAGE 2");
@@ -60,7 +60,7 @@
                       arr[i]["EMPLOYEE_ID"]
                     );
                     if (children.length) {
-                      arr[i].reportees = children;
+                      arr[i].REPORTEES = children;
                     }
                     out.push(arr[i]);
                   }
@@ -68,7 +68,12 @@
                 return out;
               }
               var nested = getNestedChildren(rowObject, 0);
-              let jsonObject1 = JSON.stringify(nested,null,4);
+              for (let i = 0; i < nested.length; i++) {
+                if (nested[i]["MANAGER EMPLOYEE_ID"] == 0) {
+                  delete nested[i]["MANAGER EMPLOYEE_ID"];
+                }
+              }
+              let jsonObject1 = JSON.stringify(nested, null, 4);
               document.getElementById("rowData").innerHTML = jsonObject1;
             });
           };
